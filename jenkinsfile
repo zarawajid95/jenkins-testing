@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+     stages {
+        stage('Initialize') {
+         steps { 
+         script { 
+          def dockerHome = tool 'myDocker'
+           env.PATH = "${dockerHome}/bin:${env.PATH}"
+          }
+         }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script{ 
+                   docker.build('zara/testapp')
+                 }
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
